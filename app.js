@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import fragment from "./shaders/fragment.glsl";
 import vertex from "./shaders/vertex.glsl";
+import testTexture from './texture.jpg'
 
 export default class Sketch {
   constructor(options) {
@@ -37,6 +38,7 @@ export default class Sketch {
       uniforms: {
         time: { value: 1.0 },
         resolution: { value: new THREE.Vector2() },
+        uTexture: {value: new THREE.TextureLoader().load(testTexture)}
       },
       vertexShader: vertex,
       fragmentShader: fragment
@@ -49,8 +51,6 @@ export default class Sketch {
   render() {
     this.time += 0.05;
     requestAnimationFrame(this.render.bind(this));
-    this.mesh.rotation.x = this.time / 10;
-    this.mesh.rotation.y = this.time / 10;
 
     this.renderer.render(this.scene, this.camera);
   }
