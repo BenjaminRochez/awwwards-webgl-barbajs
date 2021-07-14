@@ -1,6 +1,7 @@
 varying vec2 vUv;
 uniform float time;
 uniform float uProgress;
+uniform vec4 uCorners;
 uniform vec2 uResolution;
 uniform vec2 uQuadSize;
 
@@ -14,7 +15,14 @@ void main(){
     fullScreenState.x *= uResolution.x/uQuadSize.x;
     fullScreenState.y *= uResolution.y/uQuadSize.y;
 
-    vec4 finalState = mix(defaultState, fullScreenState, uProgress);
+    float cornersProgress = mix(
+
+        mix(uCorners.z, uCorners.w, uv.x),
+        mix(uCorners.x, uCorners.y, uv.x),
+        uv.y
+        );
+
+    vec4 finalState = mix(defaultState, fullScreenState, cornersProgress);
     //calculate the size of the model
     vSize = mix(uQuadSize, uResolution, uProgress);
 
