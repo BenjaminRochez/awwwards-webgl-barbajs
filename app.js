@@ -43,7 +43,8 @@ export default class Sketch {
         uProgress: {value: 0.0},
         uResolution: { value: new THREE.Vector2(this.width, this.height) },
         uQuadSize: { value: new THREE.Vector2(300, 300) },
-        uTexture: {value: new THREE.TextureLoader().load(testTexture)}
+        uTexture: {value: new THREE.TextureLoader().load(testTexture)},
+        uTextureSize: {value: new THREE.Vector2(100,100)}
       },
       vertexShader: vertex, 
       fragmentShader: fragment
