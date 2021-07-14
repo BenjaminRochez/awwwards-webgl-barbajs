@@ -1,5 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import fragment from "./shaders/fragment.glsl";
+import vertex from "./shaders/vertex.glsl";
 
 export default class Sketch {
   constructor(options) {
@@ -17,21 +19,28 @@ export default class Sketch {
 
     this.scene = new THREE.Scene();
 
-    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.container.appendChild(this.renderer.domElement);
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    
+
     this.resize();
     this.addObjects();
     this.render();
-    
+
     this.setUpResize();
   }
 
   addObjects() {
-    this.geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
-    this.material = new THREE.MeshNormalMaterial();
+    this.geometry = new THREE.PlaneBufferGeometry(0.5, 0.5);
+    this.material = new THREE.ShaderMaterial({
+      uniforms: {
+        time: { value: 1.0 },
+        resolution: { value: new THREE.Vector2() },
+      },
+      vertexShader: vertex,
+      fragmentShader: fragment
+    });
 
     this.mesh = new THREE.Mesh(this.geometry, this.material);
     this.scene.add(this.mesh);
@@ -45,15 +54,15 @@ export default class Sketch {
 
     this.renderer.render(this.scene, this.camera);
   }
-  resize(){
+  resize() {
     this.width = this.container.offsetWidth;
     this.height = this.container.offsetHeight;
     this.renderer.setSize(this.width, this.height);
-    this.camera.aspect = this.width/this.height;
+    this.camera.aspect = this.width / this.height;
     this.camera.updateProjectionMatrix();
   }
-  setUpResize(){    
-    window.addEventListener('resize', this.resize.bind(this))
+  setUpResize() {
+    window.addEventListener("resize", this.resize.bind(this));
   }
 }
 
