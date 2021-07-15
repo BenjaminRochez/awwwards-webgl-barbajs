@@ -25,7 +25,7 @@ void main(){
         uv.y
         );
 
-    vec4 finalState = mix(defaultState, fullScreenState, uProgress + waves);
+    vec4 finalState = mix(defaultState, fullScreenState, cornersProgress);
     //calculate the size of the model
     vSize = mix(uQuadSize, uResolution, uProgress);
 

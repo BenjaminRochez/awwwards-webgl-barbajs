@@ -1,8 +1,8 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import fragment from "./shaders/fragment.glsl";
-import vertex from "./shaders/vertex.glsl";
-import testTexture from './texture.jpg'
+import fragment from "../shaders/fragment.glsl";
+import vertex from "../shaders/vertex.glsl";
+import testTexture from '../img/texture.jpg'
 import * as dat from 'dat.gui'
 import gsap from 'gsap'
 export default class Sketch {
@@ -79,7 +79,7 @@ export default class Sketch {
     this.time += 0.05;
     requestAnimationFrame(this.render.bind(this));
     this.material.uniforms.uProgress.value = this.settings.progress;
-    //this.tl.progress(this.settings.progress)
+    this.tl.progress(this.settings.progress)
     this.renderer.render(this.scene, this.camera);
   }
   resize() {
