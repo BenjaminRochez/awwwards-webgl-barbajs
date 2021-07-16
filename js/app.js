@@ -41,7 +41,7 @@ export default class Sketch {
   }
 
   addObjects() {
-    this.geometry = new THREE.PlaneBufferGeometry(300, 300, 100, 100);
+    this.geometry = new THREE.PlaneBufferGeometry(1, 1, 100, 100);
     this.material = new THREE.ShaderMaterial({
       uniforms: {
         time: { value: 1.0 },
@@ -74,10 +74,33 @@ export default class Sketch {
             duration: 1
         }, 0.6)
     this.mesh = new THREE.Mesh(this.geometry, this.material);
-    this.scene.add(this.mesh);
+    //this.scene.add(this.mesh);
     this.mesh.position.x = 300;
+    this.mesh.scale.set(300,300,1); 
     // this.mesh.rotation.z = 0.5;
-    
+
+    this.images = [...document.querySelectorAll('.js-image')];
+    this.materials = [];
+
+    this.imageStore = this.images.map(img =>{
+      let bounds = img.getBoundingClientRect();
+      let m = this.material.clone();
+      this.materials.push(m);
+      let texture = new THREE.Texture(img);
+      m.uniforms.uTexture.value = texture;
+      texture.needsUpdate = true;
+      let mesh = new THREE.Mesh(this.geometry, m);
+      this.scene.add(mesh);
+      mesh.scale.set(bounds.width, bounds.height, 1);
+      return{
+        img: img,
+        mesh: mesh,
+        width: bounds.width,
+        height: bounds.height,
+        top: bounds.top,
+        left: bounds.left
+      }
+    })
   }
 
   render() {
