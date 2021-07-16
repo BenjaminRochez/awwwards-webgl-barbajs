@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@ashthornton/asscroll": "^2.0.1",
+    "@barba/core": "^2.9.7",
     "dat.gui": "^0.7.7",
     "gsap": "^3.7.0",
     "three": "^0.130.1"
