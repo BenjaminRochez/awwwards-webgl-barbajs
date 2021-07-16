@@ -103,8 +103,16 @@ export default class Sketch {
     })
   }
 
+  setPosition(){
+    this.imageStore.forEach(o=>{
+      o.mesh.position.x = - this.asscroll.currentPos + o.left - this.width/2 + o.width/2;
+      o.mesh.position.y = -o.top + this.height/2 - o.height/2;
+    })
+  }
+
   render() {
     this.time += 0.05;
+    this.setPosition();
     requestAnimationFrame(this.render.bind(this));
     this.material.uniforms.uProgress.value = this.settings.progress;
     this.tl.progress(this.settings.progress)
