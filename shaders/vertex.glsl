@@ -15,8 +15,8 @@ void main(){
     vec4 defaultState = modelMatrix*vec4( position, 1.0 );
     vec4 fullScreenState = vec4(position, 1.0);
 
-    fullScreenState.x *= uResolution.x/uQuadSize.x;
-    fullScreenState.y *= uResolution.y/uQuadSize.y;
+    fullScreenState.x *= uResolution.x;
+    fullScreenState.y *= uResolution.y;
 
     float cornersProgress = mix(
 
@@ -27,7 +27,7 @@ void main(){
 
     vec4 finalState = mix(defaultState, fullScreenState, cornersProgress);
     //calculate the size of the model
-    vSize = mix(uQuadSize, uResolution, uProgress);
+    vSize = mix(uQuadSize, uResolution, cornersProgress);
 
     gl_Position = projectionMatrix * viewMatrix * finalState;
 }
